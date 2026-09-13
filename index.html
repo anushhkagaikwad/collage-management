@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-container">
+
+    <div class="login-box">
+        <h1>College Management System</h1>
+        <h2>Admin Login</h2>
+
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+
+        <button onclick="login()">Login</button>
+
+        <p id="loginMessage"></p>
+
+        <small>Username: admin | Password: admin123</small>
+    </div>
+
+</div>
+
+
+<!-- MAIN APPLICATION -->
+<div id="mainApp" class="app hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <h2>College System</h2>
+
+        <button onclick="showModule('dashboard')">Dashboard</button>
+        <button onclick="showModule('students')">Students</button>
+        <button onclick="showModule('faculty')">Faculty</button>
+        <button onclick="showModule('courses')">Courses</button>
+        <button onclick="showModule('attendance')">Attendance</button>
+        <button onclick="showModule('marks')">Marks / Results</button>
+        <button onclick="showModule('fees')">Fees</button>
+        <button onclick="showModule('notices')">Notices</button>
+
+        <button class="logout" onclick="logout()">Logout</button>
+
+    </aside>
+
+
+    <!-- CONTENT -->
+    <main class="content">
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="module">
+
+            <h1>Dashboard</h1>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Students</h3>
+                    <p id="studentCount">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Faculty</h3>
+                    <p id="facultyCount">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Courses</h3>
+                    <p id="courseCount">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Notices</h3>
+                    <p id="noticeCount">0</p>
+                </div>
+
+            </div>
+
+            <div class="welcome">
+                <h2>Welcome to College Management System</h2>
+                <p>
+                    Admin can manage students, faculty, courses,
+                    attendance, marks, fees and notices.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- STUDENTS -->
+        <section id="students" class="module hidden">
+
+            <h1>Student Management</h1>
+
+            <div class="form-box">
+
+                <input type="hidden" id="studentIndex">
+
+                <input type="text" id="studentName" placeholder="Student Name">
+
+                <input type="text" id="studentRoll" placeholder="Roll Number">
+
+                <input type="text" id="studentDepartment" placeholder="Department">
+
+                <input type="text" id="studentYear" placeholder="Year">
+
+                <input type="text" id="studentEmail" placeholder="Email">
+
+                <button onclick="saveStudent()">Save Student</button>
+
+            </div>
+
+            <input
+                type="text"
+                id="studentSearch"
+                placeholder="Search student..."
+                onkeyup="displayStudents()"
+            >
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Roll No</th>
+                        <th>Department</th>
+                        <th>Year</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="studentTable"></tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- FACULTY -->
+        <section id="faculty" class="module hidden">
+
+            <h1>Faculty Management</h1>
+
+            <div class="form-box">
+
+                <input type="hidden" id="facultyIndex">
+
+                <input type="text" id="facultyName" placeholder="Faculty Name">
+
+                <input type="text" id="facultyId" placeholder="Faculty ID">
+
+                <input type="text" id="facultyDepartment" placeholder="Department">
+
+                <input type="text" id="facultySubject" placeholder="Subject">
+
+                <button onclick="saveFaculty()">Save Faculty</button>
+
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Faculty ID</th>
+                        <th>Department</th>
+                        <th>Subject</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="facultyTable"></tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- COURSES -->
+        <section id="courses" class="module hidden">
+
+            <h1>Course Management</h1>
+
+            <div class="form-box">
+
+                <input type="hidden" id="courseIndex">
+
+                <input type="text" id="courseName" placeholder="Course Name">
+
+                <input type="text" id="courseCode" placeholder="Course Code">
+
+                <input type="text" id="courseDepartment" placeholder="Department">
+
+                <input type="text" id="courseSemester" placeholder="Semester">
+
+                <button onclick="saveCourse()">Save Course</button>
+
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Code</th>
+                        <th>Department</th>
+                        <th>Semester</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="courseTable"></tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- ATTENDANCE -->
+        <section id="attendance" class="module hidden">
+
+            <h1>Attendance Management</h1>
+
+            <div class="form-box">
+
+                <input type="hidden" id="attendanceIndex">
+
+                <input type="text" id="attendanceRoll" placeholder="Student Roll No">
+
+                <input type="text" id="attendanceSubject" placeholder="Subject">
+
+                <input type="number" id="attendancePercentage" placeholder="Attendance %">
+
+                <select id="attendanceStatus">
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                </select>
+
+                <button onclick="saveAttendance()">Save Attendance</button>
+
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Subject</th>
+                        <th>Attendance %</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="attendanceTable"></tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- MARKS -->
+        <section id="marks" class="module hidden">
+
+            <h1>Marks / Results</h1>
+
+            <div class="form-box">
+
+                <input type="hidden" id="marksIndex">
+
+                <input type="text" id="marksRoll" placeholder="Student Roll No">
+
+                <input type="text" id="marksSubject" placeholder="Subject">
+
+                <input type="number" id="marksObtained" placeholder="Marks Obtained">
+
+                <input type="number" id="marksTotal" placeholder="Total Marks">
+
+                <button onclick="saveMarks()">Save Marks</button>
+
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                        <th>Total</th>
+                        <th>Percentage</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="marksTable"></tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- FEES -->
+        <section id="fees" class="module hidden">
+
+            <h1>Fees Management</h1>
+
+            <div class="form-box">
+
+                <input type="hidden" id="feeIndex">
+
+                <input type="text" id="feeRoll" placeholder="Student Roll No">
+
+                <input type="number" id="feeAmount" placeholder="Fee Amount">
+
+                <select id="feeStatus">
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
+                </select>
+
+                <input type="text" id="feeDate" placeholder="Date">
+
+                <button onclick="saveFee()">Save Fee</button>
+
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="feeTable"></tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- NOTICES -->
+        <section id="notices" class="module hidden">
+
+            <h1>Notice Management</h1>
+
+            <div class="form-box">
+
+                <input type="hidden" id="noticeIndex">
+
+                <input type="text" id="noticeTitle" placeholder="Notice Title">
+
+                <input type="text" id="noticeDescription" placeholder="Notice Description">
+
+                <input type="text" id="noticeDate" placeholder="Date">
+
+                <button onclick="saveNotice()">Save Notice</button>
+
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="noticeTable"></tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
